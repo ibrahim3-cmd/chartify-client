@@ -651,6 +651,10 @@ async fn health_check() -> impl IntoResponse {
     }))
 }
 
+async fn root() -> &'static str {
+    "Hello, server is running"
+}
+
 #[tokio::main]
 async fn main() {
     dotenvy::dotenv().ok();
@@ -672,6 +676,7 @@ async fn main() {
         .allow_headers([header::CONTENT_TYPE]);
 
     let app = Router::new()
+        .route("/", axum::routing::get(root))
         .route("/api/health", axum::routing::get(health_check))
         .route("/api/analyze", axum::routing::post(analyze_text))
         .layer(cors)
