@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: chartify-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: TOKENHARBOR_API_KEY
+        sync: false
